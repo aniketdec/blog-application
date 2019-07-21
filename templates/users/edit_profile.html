@@ -1,26 +1,23 @@
 {% extends 'blog/base.html' %}
-% load static %}
 {% load bootstrap4 %}
 {% bootstrap_css %}
 {% bootstrap_javascript %}
-{% block content %}
 
-    <div class="container">
-    <h2>Edit Profile</h2>
-    
-    <h4>{{user.username }}</h4>
-    <h4>{{user.email_id}}</h4>
-    <form  enctype="multipart/form-data" method="post">
+{% block content%}
+<div class="bg">
+    <div class="card" style="width: 40rem;">
+    <div class="card-body">
+    <form class="form-horizonal" name="uploadform" enctype="multipart/form-data" method="post">
         
       {% csrf_token %}
-      <fieldset class="form-group">
-          {% bootstrap_form form %}
-          {% buttons %}
-        </fieldset>
+      {% bootstrap_form form %}
+      {% buttons %}
       <button type="submit" class="btn btn-primary">
         submit
       </button>
     {% endbuttons %}
     </form>
   </div>
+</div>
+</div>
 {% endblock %}

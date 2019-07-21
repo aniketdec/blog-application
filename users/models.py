@@ -17,13 +17,10 @@ class Profile(models.Model):
         super().save()
         img = Image.open(self.image.path)
         avt=img.copy()
-        print (img.size)
-        img=img.resize((200,200),Image.ANTIALIAS)    
-        print (img.size)
+        print (img)
+        img=img.resize((300,300),Image.ANTIALIAS)    
         img.save(self.image.path)
-        print (self.image)
         avt=avt.resize((40,40),Image.ANTIALIAS)
-        print (self.avatar.path)
         avt.save(self.avatar.path)
     def __str__(self):
         return self.user.username

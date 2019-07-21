@@ -9,7 +9,25 @@ class UserRegisterForm(UserCreationForm):
     class Meta:
         model=User
         fields=['username','email','password1','password2']
+first_name=''
+last_name=''
+about_me=''
 class EditProfileForm(ModelForm):
     class Meta:
         model=Profile
         fields=['first_name','last_name','about_me','image']
+        '''print ("dgdfg",about_me)
+        widgets={
+                'first_name':forms.TextInput(attrs={
+                'class':'form_input',
+                 'value':first_name
+            }),
+            'last_name':forms.TextInput(attrs={
+                'class':'form_input',
+                'value':last_name
+            }),
+            'about_me':forms.TextInput(attrs={
+                'class':'form_input',
+                'value':about_me
+            })
+            }'''

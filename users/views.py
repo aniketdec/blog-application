@@ -18,10 +18,9 @@ class UserRegisterForm(UserCreationForm):
     class Meta:
         model=User
         fields=['username','email','password1','password2']
-
 def register(request):
     if request.method == 'POST':
-        form = UserRegisterForm(request.POST)
+        form = UserRegisterForm(request.POST,initial={'username':"AADSDS"})
         if form.is_valid():
             form.save()
             username = form.cleaned_data.get('username')
@@ -56,7 +55,10 @@ def profile(request,id=0):
     d={}
     profile=Profile.objects.all()
     url=''
+    avtar=''
     for i in profile:
+        if i.user.id==id:
+            avtar=i.avatar
         d.update({i.user.id:[i.user.username,i.avatar]})
     b=Post.objects.all()
     l=[]
@@ -74,7 +76,7 @@ def profile(request,id=0):
             profile=i
             break
     b=Post.objects.all()
-    return render(request,'users/profile.html',{'user':user,'profile':profile,'blogs':l})
+    return render(request,'users/profile.html',{'user':user,'profile':profile,'blogs':l,'avatar':avtar})
 def addprofile(request):
     if request.method == 'POST':
         form=ProfileForm(request.POST,request.FILES)#instance=Profile(user=request.user))
@@ -86,38 +88,39 @@ def addprofile(request):
     else:
         form=ProfileForm()
     return render(request,'users/addprofile.html',{'form':form})
+
 @login_required
 def edit_profile(request):
     username=request.user.username
     l=Profile.objects.all()
+    tid=0
     user=l[0]
+    avtar=''
     for i in l:
         if i.user.username==username:
+            tid=i.id
             user=i
-    print (user.first_name,user.last_name)
-    pre=user.image
-    d={'first_name':user.first_name, 'last_name':user.last_name,'about_me':user.about_me,'image':user.image}
-    form = EditProfileForm(request.POST,request.FILES,initial=d)
-    form.first_name='sadf'
-    print (d)
+    first_name=user.first_name
+    avtar=user.avatar
     if request.method == 'POST':
+        form = EditProfileForm(request.POST,request.FILES,instance=user)
         if form.is_valid():
             form.save(commit=False)
             user.first_name=form.cleaned_data['first_name']
             user.last_name=form.cleaned_data['last_name']
             user.image=form.cleaned_data['image']
-            user.avatar=form.cleaned_data['image']
+            print ("------+++++++++++------",form.cleaned_data['image'])
+            print (request.FILES)
+            user.avatar=form.cleaned_data['image']   
             user.about_me=form.cleaned_data['about_me']
             user.save()
             messages.success(request,"Profile Updated Successfully")
             return redirect('home')
         else:
-            print(form.errors)
-
-    context = {
-        "form": form}
-
-    return render(request, "users/edit_profile.html", context)
+            print ("Bihit ")
+    else:
+        form=EditProfileForm(instance=user)
+    return render(request, "users/edit_profile.html",{'form':form,'avatar':avtar})
 @login_required
 def myprofile(request,id=0):
     if id==0:
@@ -125,7 +128,10 @@ def myprofile(request,id=0):
     d={}
     profile=Profile.objects.all()
     url=''
+    avtar=''
     for i in profile:
+        if i.user.id==id:
+            avtar=i.avatar
         d.update({i.user.id:[i.user.username,i.avatar]})
     b=Post.objects.all()
     l=[]
@@ -143,4 +149,4 @@ def myprofile(request,id=0):
             profile=i
             break
     b=Post.objects.all()
-    return render(request,'users/myprofile.html',{'user':user,'profile':profile,'blogs':l})
+    return render(request,'users/myprofile.html',{'user':user,'profile':profile,'blogs':l,'avatar':avtar})

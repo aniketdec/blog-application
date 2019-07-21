@@ -8,11 +8,21 @@ from django.shortcuts import render,redirect
 from django.shortcuts import redirect
 from django.http import HttpResponseRedirect
 from django.views.generic import TemplateView
-
+x='HEHEHE'
 class PostForm(ModelForm):
     class Meta:
         model=Post
-        exclude = ['author', 'posted_on','likes','avatar']
+        fields=['title','content']
+        '''widgets={
+            'title':forms.TextInput(attrs={
+                'class':'form_input',
+                 'value':x
+            }),
+            'content':forms.TextInput(attrs={
+                'class':'form_input',
+                'placeholder':'detpa'
+            }),
+        }'''
 from django import forms
 class temp(forms.Form):
      title=forms.CharField(max_length=100)
