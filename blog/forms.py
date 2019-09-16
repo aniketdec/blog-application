@@ -8,7 +8,6 @@ from django.shortcuts import render,redirect
 from django.shortcuts import redirect
 from django.http import HttpResponseRedirect
 from django.views.generic import TemplateView
-x='HEHEHE'
 class PostForm(ModelForm):
     class Meta:
         model=Post

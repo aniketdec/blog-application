@@ -4,6 +4,21 @@ from django.contrib.auth.models import User
 #from django.core.files.base import ContentFile
 import os
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+class friend(models.Model):
+    users=models.ManyToManyField(User)
+    current_user=models.ForeignKey(User,related_name='owner',null=True,on_delete=models.CASCADE)
+    @classmethod
+    def make_friend(cls,current_user,new_friend):
+        friend,created=cls.objects.get_or_create(
+            current_user=current_user
+        )
+        friend.user.add(new_friend)
+    def lose_friend(cls,current_user,new_friend):
+        friend,created=cls.objects.get_or_create(
+            current_user=current_user
+        )
+        friend.user.remove(new_friend)
+
 class Profile(models.Model):
     user=models.ForeignKey(User,on_delete=models.CASCADE)
     first_name=models.CharField(max_length=50,null=True)

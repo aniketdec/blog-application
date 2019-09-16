@@ -34,20 +34,14 @@ def register(request):
         form = UserRegisterForm()
     return render(request,'users/register.html',{'form':form})
 class post():
-    def __init__(self,author,title,content,avatar,posted_on):
-        self.author=author
-        self.title=title
-        self.content=content
-        self.avatar=avatar
-        self.posted_on=posted_on
-class post():
-    def __init__(self,author,title,content,avatar,posted_on,url):
+    def __init__(self,author,title,content,avatar,posted_on,url,edit_url):
         self.author=author
         self.url=url
         self.title=title
         self.content=content
         self.avatar=avatar
         self.posted_on=posted_on
+        self.edit_url=edit_url
 @login_required
 def profile(request,id=0):
     if id==0:
@@ -117,7 +111,7 @@ def edit_profile(request):
             messages.success(request,"Profile Updated Successfully")
             return redirect('home')
         else:
-            print ("Bihit ")
+            pass
     else:
         form=EditProfileForm(instance=user)
     return render(request, "users/edit_profile.html",{'form':form,'avatar':avtar})
@@ -138,7 +132,8 @@ def myprofile(request,id=0):
     for i in b:
         if i.author==id:
             url='/user/profile'+str(i.author)+"/"
-            t=post("      "+d[i.author][0],i.title,i.content,d[i.author][1],i.posted_on,url)
+            edit_url='/blog/edit'+str(i.id)
+            t=post("      "+d[i.author][0],i.title,i.content,d[i.author][1],i.posted_on,url,edit_url)
             l.append(t)
     l=l[::-1]
     p=Profile.objects.all()

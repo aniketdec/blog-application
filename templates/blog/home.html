@@ -1,4 +1,8 @@
 {% extends 'blog/base.html' %}
+% load static %}
+{% load bootstrap4 %}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
 {% block content %}
 <br></br>
 <div class="container">
@@ -11,10 +15,11 @@
                         <h9 class="float-right"></h5>{{blog.posted_on}}</h9>
                         <p class="card-title" class="text-info"><img src="{{blog.avatar.url}}"  class="rounded-circle"><a href={{ blog.url }} title="View User">{{blog.author}}</a><hr> {{blog.content}}</p>
                     </div>
+                    <i onclick="myFunction(this)" class="fa fa-thumbs-up" name="{{blog.id}}"></i>
                 </div>
             </div>
             <p></p>
     `       {% endfor %} 
     </div>
 </div>
-{% endblock %} 
+{% endblock%}
