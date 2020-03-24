@@ -4,7 +4,7 @@ atomium==0.12.1
 backcall==0.1.0
 bcrypt==3.1.6
 beautifulsoup4==4.7.1
-bleach==3.0.2
+bleach==3.1.2
 bokeh==1.0.4
 bs4==0.0.1
 certifi==2019.3.9
