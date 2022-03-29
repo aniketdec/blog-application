@@ -72,7 +72,7 @@ oauthlib==3.0.1
 packaging==19.0
 pandas==0.23.4
 pandocfilters==1.4.2
-paramiko==2.4.2
+paramiko==2.10.1
 parse==1.12.0
 parso==0.3.1
 pickleshare==0.7.5
